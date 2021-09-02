@@ -1,11 +1,11 @@
 # Wazuh Docker Copyright (C) 2021 Wazuh Inc. (License GPLv2)
 FROM centos:7
 
-ARG FILEBEAT_CHANNEL=filebeat-oss
-ARG FILEBEAT_VERSION=7.10.0
+#ARG FILEBEAT_CHANNEL=filebeat-oss
+#ARG FILEBEAT_VERSION=7.10.0
 ARG WAZUH_VERSION=4.1.5-1
 ARG TEMPLATE_VERSION="master"
-ARG WAZUH_FILEBEAT_MODULE="wazuh-filebeat-0.1.tar.gz"
+#ARG WAZUH_FILEBEAT_MODULE="wazuh-filebeat-0.1.tar.gz"
 
 # Set repositories.
 RUN rpm --import https://packages.wazuh.com/key/GPG-KEY-WAZUH
@@ -17,10 +17,10 @@ RUN yum --enablerepo=updates clean metadata && \
   sed -i "s/^enabled=1/enabled=0/" /etc/yum.repos.d/wazuh.repo && \
   yum clean all && rm -rf /var/cache/yum
 
-RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm &&\
-  rpm -i ${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm && rm -f ${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm
+#RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm &&\
+#  rpm -i ${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm && rm -f ${FILEBEAT_CHANNEL}-${FILEBEAT_VERSION}-x86_64.rpm
 
-RUN curl -s https://packages.wazuh.com/4.x/filebeat/${WAZUH_FILEBEAT_MODULE} | tar -xvz -C /usr/share/filebeat/module
+#RUN curl -s https://packages.wazuh.com/4.x/filebeat/${WAZUH_FILEBEAT_MODULE} | tar -xvz -C /usr/share/filebeat/module
 
 RUN curl -L https://github.com/aelsabbahy/goss/releases/latest/download/goss-linux-amd64 -o /usr/local/bin/goss && chmod +rx /usr/local/bin/goss
 
@@ -31,12 +31,12 @@ RUN curl --fail --silent -L https://github.com/just-containers/s6-overlay/releas
     tar xzf /tmp/s6-overlay-amd64.tar.gz -C /usr ./bin && \
     rm  /tmp/s6-overlay-amd64.tar.gz
 
-COPY config/filebeat.yml /etc/filebeat/
+#COPY config/filebeat.yml /etc/filebeat/
 
-RUN chmod go-w /etc/filebeat/filebeat.yml
+#RUN chmod go-w /etc/filebeat/filebeat.yml
 
-ADD https://raw.githubusercontent.com/wazuh/wazuh/$TEMPLATE_VERSION/extensions/elasticsearch/7.x/wazuh-template.json /etc/filebeat
-RUN chmod go-w /etc/filebeat/wazuh-template.json
+#ADD https://raw.githubusercontent.com/wazuh/wazuh/$TEMPLATE_VERSION/extensions/elasticsearch/7.x/wazuh-template.json /etc/filebeat
+#RUN chmod go-w /etc/filebeat/wazuh-template.json
 
 COPY config/etc/ /etc/
 COPY --chown=root:ossec config/create_user.py /var/ossec/framework/scripts/create_user.py
