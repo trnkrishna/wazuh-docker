@@ -16,6 +16,15 @@ vm.max_map_count=262144
 chmod -R 777 data/
 ```
 
+### Running the stack
+```sh
+git clone https://github.com/trnkrishna/wazuh-docker.git -b mvp --depth=1
+cd wazuh-docker
+sudo sysctl -w vm.max_map_count=262144
+sudo chmod -R 777 data/
+docker-compose up
+```
+
 ### Other commands
 ```sh
 docker volume rm $(docker volume ls -f name=wazuh* -q )
