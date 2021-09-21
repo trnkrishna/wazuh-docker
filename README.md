@@ -1,5 +1,26 @@
 # Wazuh containers for Docker
 
+## Pre-requisites
+### Set vm.max_map_count to 262144
+
+The vm.max_map_count setting should be set permanently in /etc/sysctl.conf:
+```sh
+grep vm.max_map_count /etc/sysctl.conf
+vm.max_map_count=262144
+```
+
+[Link](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144)
+
+### Set 777 permissions to data folder
+```sh
+chmod -R 777 data/
+```
+
+### Other commands
+```sh
+docker volume rm $(docker volume ls -f name=wazuh* -q )
+```
+
 [![Slack](https://img.shields.io/badge/slack-join-blue.svg)](https://wazuh.com/community/join-us-on-slack/)
 [![Email](https://img.shields.io/badge/email-join-blue.svg)](https://groups.google.com/forum/#!forum/wazuh)
 [![Documentation](https://img.shields.io/badge/docs-view-green.svg)](https://documentation.wazuh.com)
