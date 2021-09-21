@@ -18,7 +18,8 @@ services:
       - FILEBEAT_SSL_VERIFICATION_MODE=none
     volumes:
       - ossec_api_configuration:/var/ossec/api/configuration
-      - ossec_etc:/var/ossec/etc
+        # - ossec_etc:/var/ossec/etc
+      - ./data:/var/ossec/etc
       - ossec_logs:/var/ossec/logs
       - ossec_queue:/var/ossec/queue
       - ossec_var_multigroups:/var/ossec/var/multigroups
